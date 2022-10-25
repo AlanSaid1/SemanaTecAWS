@@ -40,5 +40,12 @@ def modeloFile():
 
     return jsonify({"Resultado": "datos recibidos"})
 
+@servidorWeb.route('/modelo', methods = ["POST"])
+def model():
+    #procesar datos de entrada
+    content = request.json
+    print(content)
+    return jsonify({"resultado": "datos recibidos"})
+
 if __name__ == '__main__':
     servidorWeb.run(debug = False, host = '0.0.0.0', port = '8080')
