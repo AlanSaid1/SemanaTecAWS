@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify, render_template
 from werkzeug.utils import secure_filename
 from joblib import load
 import numpy as np
+import os
 
 #Generar el servidor en Flask(backend)
 servidorWeb = Flask(__name__)
