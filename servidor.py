@@ -30,7 +30,7 @@ def modeloFile():
     #name = "file" es donde aplica
     f = request.files['file']
     filename = secure_filename(f.filename)
-    path = os.path.join(os.getcwd, 'files', filename)
+    path = os.path.join(os.getcwd(), filename)
     f.save(path)
     file = open(path, 'r')
     for line in file:
