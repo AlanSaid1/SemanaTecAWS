@@ -1,4 +1,5 @@
 #from crypt import methods
+
 from fileinput import filename
 from importlib.resources import path
 from flask import Flask, request, jsonify, render_template
@@ -6,6 +7,9 @@ from werkzeug.utils import secure_filename
 from joblib import load
 import numpy as np
 import os
+
+#cargar el modelo
+dt = load ('modelo.joblib')
 
 #Generar el servidor en Flask(backend)
 servidorWeb = Flask(__name__)
@@ -20,10 +24,18 @@ def formulario():
 def modeloForm():
     #procesar datos de entrada
     contenido = request.form
-
     print (contenido)
 
-    return jsonify({"Resultado": "datos recibidos"})
+    datosEntrada = np.array([
+        10.400, 0.430, 0.500, 2.300, 0.068,13.000,19.000, 0.996,
+        contenido['pH'],
+        contenido['Sulfatos'],
+        contenido['Alcohol']
+    ])
+    #Utilizar el modelo
+    resultado = dt.predict(datosEntrada.reshape(1,-1))
+
+    return jsonify({'Resultado':str(resultado[0])})
 
 #procesar datos de un archivo
 @servidorWeb.route('/modeloFile', methods = ["POST"])
