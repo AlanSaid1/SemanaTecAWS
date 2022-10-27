@@ -44,13 +44,19 @@ def modeloFile():
     f = request.files['file']
     filename = secure_filename(f.filename)
     path = os.path.join(os.getcwd(), filename)
+
     f.save(path)
     file = open(path, 'r')
+
+    h = []
+    
     for line in file:
 
         print(line)
 
-    return jsonify({"Resultado": "datos recibidos"})
+    datosEntrada = np.array(h)
+    resultado = dt.predict(datosEntrada.reshape(1,-1))
+    return jsonify({"Resultado":str(resultado[0])})
 
 @servidorWeb.route('/modelo', methods = ["POST"])
 def model():
